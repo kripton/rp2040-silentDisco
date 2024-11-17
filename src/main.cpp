@@ -111,12 +111,8 @@ int main() {
     LOG("SYSTEM: SETUP COMPLETE");
 
     while (true) {
-        // TODO
-        tight_loop_contents();
-        sleep_us(10);
-
         if ((time_us_64() - lastInRisingTime) > (uint64_t)3 * 1000 * 1000) {
-            LOG("TIMEOUT. Output disabled!");
+            LOG("TIMEOUT. Output disabled! Last InFreq: %f Hz", inFreq);
             pwm_set_gpio_level(PIN_SIG_OUT, 0);
             pwm_set_enabled(0, false);
             level = 0;
@@ -136,5 +132,7 @@ int main() {
         for (int i = PIN_LED_A; i < PIN_LED_H; i++) {
             pwm_set_gpio_level(i, level + (UINT16_MAX / 8));
         }
+
+        sleep_us(10);
     }
 };
