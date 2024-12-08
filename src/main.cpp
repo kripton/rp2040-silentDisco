@@ -17,9 +17,7 @@ extern "C" {
 // Super-globals (for all modules)
 Log logger;
 
-uint16_t ledLevel[8] = {0};
 volatile uint64_t lastInRisingTime;
-uint16_t level = 0;
 double inFreq = 0;
 
 // Interrupt service handler for SIGNAL INPUT
@@ -111,7 +109,6 @@ int main() {
             LOG("TIMEOUT. Output disabled! Last InFreq: %f Hz", inFreq);
             pwm_set_gpio_level(PIN_SIG_OUT, 0);
             pwm_set_enabled(0, false);
-            level = 0;
         } else {
             gpio_put(PIN_LED_B, 1);
             // 50% duty cycle, variable frequency
@@ -122,12 +119,6 @@ int main() {
             LOG("IN FREQ: %f Hz. Divider: %f. OutFreq: %f Hz", inFreq, divider, outFreq);
             pwm_set_clkdiv(0, divider);
             pwm_set_enabled(0, true);
-            level = level + 5;
-        }
-
-        // Eye candy!
-        for (int i = PIN_LED_A; i <= PIN_LED_H; i++) {
-            pwm_set_gpio_level(i, level + (UINT16_MAX / 8));
         }
 
         sleep_us(10);
