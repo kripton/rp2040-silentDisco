@@ -1,0 +1,3 @@
+[submodule "lib/Pico-USB-audio"]
+	path = lib/Pico-USB-audio
+	url = https://github.com/tierneytim/Pico-USB-audio.git
