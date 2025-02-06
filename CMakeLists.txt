@@ -19,13 +19,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ## Add our own C/C++ files here
 ## Sorted alphabetically
 add_executable(${CMAKE_PROJECT_NAME}
+    ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-USB-audio/SDM/src/pdmRP2040.cpp
+
     ${CMAKE_CURRENT_LIST_DIR}/src/log.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 )
 
 ## Add our rp2040-PIO programs here
 #pico_generate_pio_header(${CMAKE_PROJECT_NAME}
-#    ${CMAKE_CURRENT_LIST_DIR}/src/tx16.pio
+#    ${CMAKE_CURRENT_LIST_DIR}/lib/tx16.pio
 #)
 
 ## Print memory usage percentages after linking
