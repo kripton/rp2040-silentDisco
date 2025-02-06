@@ -7,7 +7,7 @@ set(ENV{PICO_BOARD} "pico")
 include(${CMAKE_CURRENT_LIST_DIR}/pico_sdk_import.cmake)
 
 ## Give the baby a name. Will also be the name of the resulting binaries
-project(rp2040-servolenkung)
+project(rp2040-silentDisco)
 
 ## Init the pico-sdk. Will instruct the user what to do if deps are missing
 pico_sdk_init()
@@ -19,10 +19,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ## Add our own C/C++ files here
 ## Sorted alphabetically
 add_executable(${CMAKE_PROJECT_NAME}
+    ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-USB-audio/SDM/src/SDM.cpp
     ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-USB-audio/SDM/src/pdmRP2040.cpp
 
     ${CMAKE_CURRENT_LIST_DIR}/src/log.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
+)
+
+## Needed so tusb_config.h is found by the tinyUSB-library included in the pico-sdk
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/lib/Pico-USB-audio/SDM/src
 )
 
 ## Add our rp2040-PIO programs here
@@ -37,7 +43,9 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS "-Wl,--print-memory-usage")
 ## Sorted alphabetically
 target_link_libraries(${CMAKE_PROJECT_NAME}
     hardware_irq
+    hardware_pio
     hardware_pwm
+    pico_multicore
     pico_stdlib
     pico_time
 )
