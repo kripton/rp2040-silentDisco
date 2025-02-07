@@ -1,3 +1,6 @@
 [submodule "lib/Pico-USB-audio"]
 	path = lib/Pico-USB-audio
 	url = git@github.com:kripton/Pico-USB-audio.git
+[submodule "lib/opus"]
+	path = lib/opus
+	url = https://github.com/xiph/opus.git
